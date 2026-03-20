@@ -1,0 +1,6 @@
+@Bez_chistoq_Arhitecturi_HostAddress = http://localhost:5233
+
+GET {{Bez_chistoq_Arhitecturi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
