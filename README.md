@@ -1,0 +1,1 @@
+# Bez_chistoq_Arhitecturi
