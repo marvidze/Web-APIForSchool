@@ -1,0 +1,9 @@
+vglobal:
+  scrape_interval: 5s # Интервал сбора метрик
+
+scrape_configs:
+  - job_name: 'school_api'
+    metrics_path: '/metrics'
+    static_configs:
+      # Обращаемся к контейнеру по имени сервиса из docker-compose
+      - targets: ['school.api:8080']

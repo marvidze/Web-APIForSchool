@@ -1,4 +1,5 @@
 using School.API.Extensions;
+using Prometheus;
 
 namespace School.API;
 
@@ -22,9 +23,14 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseHttpMetrics();
+
         app.UseHttpsRedirection();
         app.UseAuthorization();
+
         app.MapControllers();
+        app.MapMetrics();
+
         app.Run();
     }
 }

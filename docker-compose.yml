@@ -1,0 +1,56 @@
+services:
+  # 1. API
+  school.api:
+    image: school.api:latest
+    build:
+      context: .
+      dockerfile: DockerFile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MongoDb=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    networks:
+      - school-network
+
+  # 2. База данных MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - school-network
+
+  # 3. Сборщик метрик Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - school-network
+
+  # 4. Визуализация Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - school-network
+
+networks:
+  school-network:
+    driver: bridge
+
+volumes:
+  mongo_data:

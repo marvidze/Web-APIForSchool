@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path="docker-compose.yml" />
+    <File Path="DockerFile" />
+  </Folder>
   <Project Path="Bez_chistoq_Arhitecturi/School.API.csproj" />
   <Project Path="School.Application/School.Application.csproj" Id="e67c7182-9525-4c63-8be0-a8e2378cab89" />
   <Project Path="School.Core/School.Core.csproj" />
