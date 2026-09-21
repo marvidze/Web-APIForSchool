@@ -1,4 +1,6 @@
 using School.API.Extensions;
+using School.API.GraphQL;
+using ChilliCream.Nitro.App;
 using Prometheus;
 
 namespace School.API;
@@ -14,6 +16,12 @@ public class Program
         builder.Services.AddRepositories();
         builder.Services.AddServices();
         builder.Services.AddSwagger();
+        builder.Services
+            .AddGraphQLServer()
+            .AddQueryType<Query>()
+            .AddMutationType<Mutation>()
+            .AddTypeExtension<StudentResolvers>()
+            .AddTypeExtension<GroupResolvers>();
 
         var app = builder.Build();
 
@@ -29,6 +37,11 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.MapGraphQL()
+            .WithOptions(options =>
+            {
+                options.Tool.ServeMode = ServeMode.Embedded;
+            });
         app.MapMetrics();
 
         app.Run();
