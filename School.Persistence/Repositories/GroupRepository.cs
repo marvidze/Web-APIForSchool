@@ -23,6 +23,21 @@ namespace School.Persistence.Repositories
             return Result<Group>.Success(group);
         }
 
+        public async Task<Result<IEnumerable<Group>>> GetByIdsAsync(IEnumerable<string> ids)
+        {
+            var uniqueIds = ids.Distinct().ToArray();
+
+            if (uniqueIds.Length == 0) return Result<IEnumerable<Group>>.Success(Array.Empty<Group>());
+
+            var filter = Builders<Group>.Filter.In(group => group.Id, uniqueIds);
+            
+            var groups = await _groupCollection
+            .Find(filter)
+            .ToListAsync();
+
+            return Result<IEnumerable<Group>>.Success(groups);
+        }
+
         public async Task<Result<IEnumerable<Group>>> GetAllAsync()
         {
             var groups = await _groupCollection.Find(_ => true).ToListAsync();

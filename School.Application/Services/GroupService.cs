@@ -21,6 +21,11 @@ namespace School.Application.Services
             return await _groupRepository.GetByIdAsync(id);
         }
 
+        public async Task<Result<IEnumerable<Group>>> GetByIdsAsync(IEnumerable<string> ids)
+        {
+            return await _groupRepository.GetByIdsAsync(ids);
+        }
+
         public async Task<Result<IEnumerable<Group>>> GetAllAsync()
         {
             return await _groupRepository.GetAllAsync();

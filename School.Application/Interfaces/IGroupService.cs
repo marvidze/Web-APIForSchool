@@ -1,4 +1,5 @@
-﻿using School.Application.Contracts.Group;
+﻿using MongoDB.Driver.GeoJsonObjectModel;
+using School.Application.Contracts.Group;
 using School.Core.Common;
 using School.Core.Models;
 
@@ -7,6 +8,8 @@ namespace School.Application.Interfaces
     public interface IGroupService
     {
         Task<Result<Group>> GetByIdAsync(string id);
+
+        Task<Result<IEnumerable<Group>>> GetByIdsAsync(IEnumerable<string> ids);
 
         Task<Result<IEnumerable<Group>>> GetAllAsync();
 

@@ -6,9 +6,6 @@ namespace School.API.GraphQL;
 
 public class Query
 {
-    /// <summary>
-    /// Получить всех студентов
-    /// </summary>
     public async Task<IEnumerable<Student>> GetStudents(IStudentService studentService)
     {
         var result = await studentService.GetAllAsync();
@@ -16,9 +13,6 @@ public class Query
         return result.Data!;
     }
 
-    /// <summary>
-    /// Получить студента по ID
-    /// </summary>
     public async Task<Student> GetStudent( string id, IStudentService studentService)
     {
         var result = await studentService.GetByIdAsync(id);
@@ -37,9 +31,6 @@ public class Query
         return result.Data!;
     }
 
-    /// <summary>
-    /// Получить все группы
-    /// </summary>
     public async Task<IEnumerable<Group>> GetGroups(IGroupService groupService)
     {
         var result = await groupService.GetAllAsync();
@@ -58,9 +49,6 @@ public class Query
         return result.Data!;
     }
 
-    /// <summary>
-    /// Получить группу по ID
-    /// </summary>
     public async Task<Group> GetGroup(string id, IGroupService groupService)
     {
         var result = await groupService.GetByIdAsync(id);

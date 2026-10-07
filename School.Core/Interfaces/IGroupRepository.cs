@@ -7,6 +7,8 @@ namespace School.Core.Interfaces
     {
         Task<Result<Group>> GetByIdAsync(string id);
 
+        Task<Result<IEnumerable<Group>>> GetByIdsAsync(IEnumerable<string> ids);
+
         Task<Result<IEnumerable<Group>>> GetAllAsync();
 
         Task<Result<Group>> CreateAsync(Group group);

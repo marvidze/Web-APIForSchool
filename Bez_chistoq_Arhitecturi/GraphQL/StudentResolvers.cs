@@ -1,33 +1,35 @@
-﻿using School.Application.Interfaces;
+﻿using HotChocolate;
+using School.API.GraphQL.DataLoaders;
 using School.Core.Entities;
+using School.Core.Errors;
 using School.Core.Models;
 
 namespace School.API.GraphQL;
 
-
 [ExtendObjectType(typeof(Student))]
 public class StudentResolvers
 {
-    public async Task<Group?> GetGroup([Parent] Student student, IGroupService groupService)
+    public async Task<Group?> GetGroup([Parent] Student student, GroupByIdDataLoader groupDataLoader)
     {
         if (student.GroupId is null)
         {
             return null;
         }
 
-        var result = await groupService.GetByIdAsync(student.GroupId);
+        var group = await groupDataLoader.LoadAsync(student.GroupId);
 
-        if (result.IsFailure)
+        if (group is null)
         {
+            var error = GroupErrors.NotFound(student.GroupId);
+
             throw new GraphQLException(
                 ErrorBuilder.New()
-                    .SetMessage(result.Error!.Message)
-                    .SetCode(result.Error.Code)
-                    .SetExtension("statusCode", result.Error.StatusCode)
-                    .Build()
-            );
+                    .SetMessage(error.Message)
+                    .SetCode(error.Code)
+                    .SetExtension("statusCode", error.StatusCode)
+                    .Build());
         }
 
-        return result.Data;
+        return group;
     }
 }

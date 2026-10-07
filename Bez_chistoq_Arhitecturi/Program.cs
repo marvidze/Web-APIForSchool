@@ -1,3 +1,4 @@
+using School.API.GraphQL.DataLoaders;
 using School.API.Extensions;
 using School.API.GraphQL;
 using ChilliCream.Nitro.App;
@@ -21,7 +22,8 @@ public class Program
             .AddQueryType<Query>()
             .AddMutationType<Mutation>()
             .AddTypeExtension<StudentResolvers>()
-            .AddTypeExtension<GroupResolvers>();
+            .AddTypeExtension<GroupResolvers>()
+            .AddDataLoader<GroupByIdDataLoader>();
 
         var app = builder.Build();
 
